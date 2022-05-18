@@ -3,7 +3,6 @@
 import { Form, Button } from "react-bootstrap";
 import AuthService from "../../utils/auth";
 import { useState } from "react";
-import { validateEmail } from "../../utils/helpers";
 
 function Signup(props) {
   const {
@@ -11,19 +10,11 @@ function Signup(props) {
     setLoginSelected
   } = props; 
 
-  const [formState, setFormState] = useState({ loginName: '', loginEmail: '', loginPassword: '' });
+  const [formState, setFormState] = useState({ loginName: '', loginPassword: '' });
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (e) => {
-    if (e.target.name === 'email') {
-      const isValid = validateEmail(e.target.value);
-      if (!isValid) {
-        setErrorMessage('Your email is invalid.');
-      } else {
-        setErrorMessage('');
-      }
-    }
-    else if (e.target.name === 'password') {
+     if (e.target.name === 'password') {
       if (e.target.value.length < 8) {
         setErrorMessage('Your password must be at least 8 characters in length.');
       } else {
@@ -44,15 +35,13 @@ function Signup(props) {
   const signupSubmit = (e) => {
     e.preventDefault();
     const username = document.querySelector('#username').value.trim();
-    const email = document.querySelector('#email').value.trim();
     const password = document.querySelector('#password').value.trim();
 
-    if (username && email && password) {
+    if (username && password) {
       fetch('/api/users/', {
         method: 'post',
         body: JSON.stringify({
           username,
-          email,
           password
         }),
         headers: { 'Content-Type': 'application/json' }
@@ -87,10 +76,6 @@ function Signup(props) {
       <Form.Group>
         <Form.Label htmlFor="username">Username: </Form.Label>
         <Form.Control bsPrefix="neu-input"  id = "username" type="text" name="username" defaultValue={''} onBlur={handleChange} />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label htmlFor="email">Email address: </Form.Label>
-        <Form.Control bsPrefix="neu-input" id = "email" type="email" name="email" defaultValue={''} onBlur={handleChange} />
       </Form.Group>
       <Form.Group>
         <Form.Label htmlFor="password">Password: </Form.Label>

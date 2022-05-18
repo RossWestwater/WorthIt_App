@@ -62,11 +62,10 @@ const userController = {
 	createUser: async function (req, res, next) {
 		try {
 			if (!req.body.username || !req.body.password) {
-				res.status(400).json({ success: false, msg: "Please pass username and password." });
+				res.status(400).json({ success: false, msg: "Please review the username and password." });
 			} else {
         var newUser = new User({
           username: req.body.username,
-          email: req.body.email,
 					password: req.body.password
 				});
 	
