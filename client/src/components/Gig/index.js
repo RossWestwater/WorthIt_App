@@ -67,6 +67,8 @@ function GigForm(props) {
     await calculateHourly();
     await calculateTime();
     await calculateTotal();
+    await distInput(0)
+    await compInput(0)
     await setOrder("order-last");
   }
 
